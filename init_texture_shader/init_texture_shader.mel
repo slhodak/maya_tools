@@ -1,0 +1,48 @@
+// Shader
+$aiStandardSurfaceNode = `shadingNode -asShader -isColorManaged aiStandardSurface`;
+$shadingGroupNode = `sets -renderable true -noSurfaceShader true -empty`;
+connectAttr ($aiStandardSurfaceNode + ".outColor") ($shadingGroupNode + ".surfaceShader");
+
+// Albedo
+$albedoFileNode = `shadingNode -asTexture -isColorManaged file`;
+
+// Ambient Occlusion
+// Labeled so you can see what the node is for (b/c it will not be connected by default)
+// Name includes current time so it won't conflict when you run the script again
+$aoFileNodeName = "ao_temp_" + `date -format hhmmss`;
+$aoFileNode = `shadingNode -asTexture -isColorManaged -name $aoFileNodeName file`;
+
+// Multiply Albedo by AO
+// By default, color B will be white and file will not be connected,
+// so if there is no AO file, this will have no effect
+$aoColorCompositeNode = `shadingNode -asUtility colorComposite`;
+setAttr ($aoColorCompositeNode + ".operation") 3;
+setAttr ($aoColorCompositeNode + ".colorB") 1.0 1.0 1.0;
+// Label Color Composite node by it's intended purpose
+$aoColorCompositeNodeNewName = ($aoColorCompositeNode + "_multiply_AO"); 
+rename $aoColorCompositeNode $aoColorCompositeNodeNewName;
+// Name serves as handle for the object itself - so replace the old reference with the new name
+$aoColorCompositeNode = $aoColorCompositeNodeNewName;
+connectAttr ($albedoFileNode + ".outColor") ($aoColorCompositeNode + ".colorA");
+connectAttr ($aoColorCompositeNode + ".outColor") ($aiStandardSurfaceNode + ".baseColor");
+
+// Roughness
+$roughnessFileNode = `shadingNode -asTexture -isColorManaged file`;
+$roughnessColorToFloatNode = `shadingNode -asUtility aiColorToFloat`;
+$roughnessRemapValueNode = `shadingNode -asUtility remapValue`;
+connectAttr ($roughnessFileNode + ".outColor") ($roughnessColorToFloatNode + ".input");
+connectAttr ($roughnessRemapValueNode + ".outValue") ($aiStandardSurfaceNode + ".specularRoughness");
+connectAttr ($roughnessColorToFloatNode + ".outValue") ($roughnessRemapValueNode + ".inputValue");
+
+// Normal
+$aiImageNode = `shadingNode -asTexture -isColorManaged aiImage`;
+$aiNormalNode = `shadingNode -asShader aiNormalMap`;
+connectAttr ($aiImageNode + ".outColor") ($aiNormalNode + ".input");
+connectAttr ($aiNormalNode + ".outValue") ($aiStandardSurfaceNode + ".normalCamera");
+
+// UV
+$placeTextureNode = `shadingNode -asUtility place2dTexture`;
+connectAttr ($placeTextureNode + ".outUV") ($albedoFileNode + ".uv");
+connectAttr ($placeTextureNode + ".outUV") ($roughnessFileNode + ".uv");
+connectAttr ($placeTextureNode + ".outUV") ($aoFileNode + ".uv");
+connectAttr ($placeTextureNode + ".outUV") ($aiImageNode + ".uvcoords");
