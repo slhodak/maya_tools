@@ -1,7 +1,7 @@
 from maya import cmds
 
 from ..paths import DEFAULT_ICON
-from .init_texture_shader import init_texture_shader
+from .init_texture_shader.init_texture_shader import init_texture_shader
 from .light_rig.easy_light_rig import create_easy_light_rig
 from .light_pair.spotlight_pair import create_spotlight_pair
 from .environment_lighting.environment_lighting import (
