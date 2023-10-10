@@ -1,6 +1,6 @@
 from maya import cmds
 
-from ..paths import DEFAULT_ICON
+from ..paths import get_icon_path
 from .init_texture_shader.init_texture_shader import init_texture_shader
 from .light_rig.easy_light_rig import create_easy_light_rig
 from .light_pair.spotlight_pair import create_spotlight_pair
@@ -15,7 +15,7 @@ def add_init_texture_shader_button(shelf):
     print("Creating texture shader init button")
     cmds.shelfButton(
         parent=shelf,
-        i=DEFAULT_ICON,
+        i=get_icon_path("init_texture.png"),
         c=init_texture_shader,
         label="InitTexture",
         annotation="Initialize a basic texture shading setup",
@@ -26,7 +26,7 @@ def add_environment_lighting_button(shelf):
     print("Creating easy light rig button")
     cmds.shelfButton(
         parent=shelf,
-        i=DEFAULT_ICON,
+        i=get_icon_path("environment_lighting.png"),
         c=set_up_environment_lighting_around_character,
         label="EnvLights",
         annotation="Create environment lights based on existing character lighting",
@@ -37,7 +37,7 @@ def add_easy_light_rig_button(shelf):
     print("Creating easy light rig button")
     cmds.shelfButton(
         parent=shelf,
-        i=DEFAULT_ICON,
+        i=get_icon_path("three_point.png"),
         c=create_easy_light_rig,
         label="LightPair",
         annotation="Create simple 3-point lighting rig with a camera",
@@ -48,7 +48,7 @@ def add_spotlight_pair_button(shelf):
     print("Creating spotlight pair button")
     cmds.shelfButton(
         parent=shelf,
-        i=DEFAULT_ICON,
+        i=get_icon_path("two_spotlights.png"),
         c=create_spotlight_pair,
         label="LightPair",
         annotation="Create two linked spot lights",

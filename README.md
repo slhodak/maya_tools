@@ -9,6 +9,4 @@ See the tool folders for their respective descriptions.
 
 Note 1: Not all tools are complete, incomplete tools do not load to the new shelf as a button.
 
-Note 2: For now, all tools have the same icon -- please refer to the tooltip for a description.
-
 Have a fantastic day :)
