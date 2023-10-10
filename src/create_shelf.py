@@ -1,7 +1,7 @@
 from maya import cmds
 
 from ..paths import get_icon_path
-from .init_texture_shader.init_texture_shader import init_texture_shader
+from .init_texture_shader.init_texture_shader import init_texture_shader_dialog
 from .light_rig.easy_light_rig import create_easy_light_rig
 from .light_pair.spotlight_pair import create_spotlight_pair
 from .environment_lighting.environment_lighting import (
@@ -16,7 +16,7 @@ def add_init_texture_shader_button(shelf):
     cmds.shelfButton(
         parent=shelf,
         i=get_icon_path("init_texture.png"),
-        c=init_texture_shader,
+        c=init_texture_shader_dialog,
         label="InitTexture",
         annotation="Initialize a basic texture shading setup",
     )
@@ -86,3 +86,4 @@ def add_or_update_custom_shelf():
     add_easy_light_rig_button(custom_shelf)
     add_spotlight_pair_button(custom_shelf)
     add_environment_lighting_button(custom_shelf)
+    add_spotlight_button(custom_shelf)
