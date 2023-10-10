@@ -1,5 +1,6 @@
 from maya import cmds
 
+from ..paths import DEFAULT_ICON
 from .light_rig.easy_light_rig import create_easy_light_rig
 from .light_pair.spotlight_pair import create_spotlight_pair
 from .environment_lighting.environment_lighting import (
@@ -11,10 +12,9 @@ CUSTOM_SHELF_NAME = "SScripts"
 
 def add_environment_lighting_button(shelf):
     print("Creating easy light rig button")
-    icon_path = "C:/Users/slhod/OneDrive/Pictures/Icons/cake2.png"
     cmds.shelfButton(
         parent=shelf,
-        i=icon_path,
+        i=DEFAULT_ICON,
         c=set_up_environment_lighting_around_character,
         label="EnvLights",
         annotation="Create environment lights based on existing character lighting",
@@ -23,10 +23,9 @@ def add_environment_lighting_button(shelf):
 
 def add_easy_light_rig_button(shelf):
     print("Creating easy light rig button")
-    icon_path = "C:/Users/slhod/OneDrive/Pictures/Icons/cake2.png"
     cmds.shelfButton(
         parent=shelf,
-        i=icon_path,
+        i=DEFAULT_ICON,
         c=create_easy_light_rig,
         label="LightPair",
         annotation="Create simple 3-point lighting rig with a camera",
@@ -35,10 +34,9 @@ def add_easy_light_rig_button(shelf):
 
 def add_spotlight_pair_button(shelf):
     print("Creating spotlight pair button")
-    icon_path = "C:/Users/slhod/OneDrive/Pictures/Icons/cake2.png"
     cmds.shelfButton(
         parent=shelf,
-        i=icon_path,
+        i=DEFAULT_ICON,
         c=create_spotlight_pair,
         label="LightPair",
         annotation="Create two linked spot lights",
