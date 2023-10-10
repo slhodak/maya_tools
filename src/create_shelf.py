@@ -1,6 +1,7 @@
 from maya import cmds
 
 from ..paths import DEFAULT_ICON
+from .init_texture_shader import init_texture_shader
 from .light_rig.easy_light_rig import create_easy_light_rig
 from .light_pair.spotlight_pair import create_spotlight_pair
 from .environment_lighting.environment_lighting import (
@@ -8,6 +9,17 @@ from .environment_lighting.environment_lighting import (
 )
 
 CUSTOM_SHELF_NAME = "SScripts"
+
+
+def add_init_texture_shader_button(shelf):
+    print("Creating texture shader init button")
+    cmds.shelfButton(
+        parent=shelf,
+        i=DEFAULT_ICON,
+        c=init_texture_shader,
+        label="InitTexture",
+        annotation="Initialize a basic texture shading setup",
+    )
 
 
 def add_environment_lighting_button(shelf):
@@ -70,6 +82,7 @@ def add_or_update_custom_shelf():
         cmds.deleteUI(f"{main_shelf}|{CUSTOM_SHELF_NAME}")
 
     custom_shelf = cmds.shelfLayout(CUSTOM_SHELF_NAME, parent=main_shelf)
+    add_init_texture_shader_button(custom_shelf)
     add_easy_light_rig_button(custom_shelf)
     add_spotlight_pair_button(custom_shelf)
     add_environment_lighting_button(custom_shelf)
